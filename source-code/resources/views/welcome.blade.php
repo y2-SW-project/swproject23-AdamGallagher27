@@ -23,7 +23,23 @@
                     @endauth
                 </div>
             @endif
-                    
+
+            {{-- testing nav bar component --}}
+            <x-navbar/>
+
+
+            {{-- testing category buttons component --}}
+            @for ($i = 0; $i < 10; $i++)
+            <x-category-buttons title='test' />
+            @endfor
+
+            {{-- testing top shops component --}}
+            @for ($i = 0; $i < 10; $i++)
+            <x-top-shops userName='test' img='path' />
+            @endfor
+
+            {{-- shop now / create shop component --}}
+            <x-home-bottom />
             
         </div>
     </body>
