@@ -13,8 +13,10 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
 
+    
+
     public function role() {
-        return $this->belongsToMany("App\Models\Role");
+        return $this->belongsTo("App\Models\Role");
     }
 
 
