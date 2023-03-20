@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Guitar;
+
 
 class GuitarController extends Controller
 {
@@ -11,10 +13,6 @@ class GuitarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     //
-    // }
 
     /**
      * Show the form for creating a new resource.
@@ -23,9 +21,8 @@ class GuitarController extends Controller
      */
     public function create()
     {
-        
-
-
+        // return the form for creating a new guitar
+        return view('guitar.create-form');
     }
 
     /**
@@ -36,7 +33,30 @@ class GuitarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'make' => 'required',
+            'bid_expiration' => 'required',
+            'price' => 'required',
+            'type_id' => 'required',
+            'condition_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        Guitar::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'make' => $request->make,
+            'bid_expiration' => $request->bid_expiration,
+            'price' => $request->price,
+            'type_id' => $request->type_id,
+            'condition_id' => $request->condition_id,
+            'user_id' => $request->user_id,
+        ]);
+
+        // return dd($request);
     }
 
     /**
