@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Guitar;
 
 
@@ -14,6 +16,15 @@ class GuitarController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function index()
+    {
+        $guitars = DB::table('guitars')->take(8)->get();
+
+        return view('user.guitar.welcome')->with('guitars', $guitars);
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -22,7 +33,7 @@ class GuitarController extends Controller
     public function create()
     {
         // return the form for creating a new guitar
-        return view('guitar.create-form');
+        return view('user.guitar.create-form');
     }
 
     /**
@@ -67,7 +78,9 @@ class GuitarController extends Controller
      */
     public function show($id)
     {
-        //
+        $guitar = Guitar::where('id', $id)->firstOrFail();
+
+        return view('guitar.product')->with("guitar",$guitar);
     }
 
     /**
@@ -78,7 +91,7 @@ class GuitarController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
