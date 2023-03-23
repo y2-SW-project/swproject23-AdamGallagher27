@@ -8,10 +8,13 @@
 </head>
 <body>
     {{-- product component --}}
+    {{ $guitar }}
+    {{ $altProducts }}
 
     {{-- other producst --}}
-    @for ($i = 0; $i < 10; $i++)
-        <x-product-card price=20/>
-    @endfor
+    {{-- <x-product-card price=20/> --}}
+    {{-- @foreach ($altProducts as $alt)
+        {{ $alt }}
+    @endforeach --}}
 </body>
 </html>
