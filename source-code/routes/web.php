@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // use production controller
-use App\Http\Controllers\GuitarController;
+use App\Http\Controllers\user\GuitarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +18,9 @@ use App\Http\Controllers\GuitarController;
 */
 
 // standard routes for users not logged in=
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('guitar/welcome');
+// });
 
 Route::get('/search', function () {
     return view('search');
@@ -39,7 +39,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // crud routes
-Route::resource("/guitar", GuitarController::class)->middleware(["auth"])->names("guitar");
+Route::resource("/user/guitar", GuitarController::class)->middleware(["auth"])->names("guitar");
+
 
 
 
