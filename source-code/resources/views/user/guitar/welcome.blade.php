@@ -40,6 +40,7 @@
             <x-top-shops userName='test' img='path' />
             @endfor --}}
             @foreach ($guitars as $guitar)
+                <a href="{{route('guitar.show', $guitar->id) }}">show </a>
                 <x-top-shops userName='{{ $guitar->name }}' img='path' />
             @endforeach
 
