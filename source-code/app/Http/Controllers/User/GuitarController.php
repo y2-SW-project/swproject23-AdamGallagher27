@@ -79,8 +79,9 @@ class GuitarController extends Controller
     public function show($id)
     {
         $guitar = Guitar::where('id', $id)->firstOrFail();
+        $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
 
-        return view('guitar.product')->with("guitar",$guitar);
+        return view('user.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts);
     }
 
     /**
