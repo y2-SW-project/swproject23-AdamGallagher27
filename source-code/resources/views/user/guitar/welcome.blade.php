@@ -27,16 +27,21 @@
             {{-- testing nav bar component --}}
             <x-navbar/>
 
+                {{-- {{ $guitars }} --}}
+            
 
             {{-- testing category buttons component --}}
-            @for ($i = 0; $i < 10; $i++)
+            {{-- @for ($i = 0; $i < 10; $i++)
             <x-category-buttons title='test' />
-            @endfor
+            @endfor --}}
 
             {{-- testing top shops component --}}
-            @for ($i = 0; $i < 10; $i++)
+            {{-- @for ($i = 0; $i < 10; $i++)
             <x-top-shops userName='test' img='path' />
-            @endfor
+            @endfor --}}
+            @foreach ($guitars as $guitar)
+                <x-top-shops userName='{{ $guitar->name }}' img='path' />
+            @endforeach
 
             {{-- shop now / create shop component --}}
             <x-home-bottom />
