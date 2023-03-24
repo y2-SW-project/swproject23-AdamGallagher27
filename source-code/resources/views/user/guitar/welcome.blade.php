@@ -27,7 +27,7 @@
             {{-- testing nav bar component --}}
             <x-navbar/>
 
-                {{-- {{ $guitars }} --}}
+            {{-- {{ $guitars }} --}}
             
 
             {{-- testing category buttons component --}}
@@ -41,6 +41,7 @@
             @endfor --}}
             @foreach ($guitars as $guitar)
                 <a href="{{route('guitar.show', $guitar->id) }}">show </a>
+                <a href="{{route('guitar.edit', $guitar->id) }}">edit </a>
                 <x-top-shops userName='{{ $guitar->name }}' img='path' />
             @endforeach
 
