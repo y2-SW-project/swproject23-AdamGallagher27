@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Guitar;
 
 
@@ -144,6 +146,15 @@ class GuitarController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $guitar = Guitar::where('id', $id)->firstOrFail();
+
+        if($guitar->user_id != Auth::id()) {
+            return abort(403);
+        }
+
+        // delete selected guitar
+        $guitar->delete();
+
     }
 }
