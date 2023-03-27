@@ -12,7 +12,7 @@
     {{-- <a href="{{route('guitar.destroy', $guitar->id) }}">delete</a> --}}
 
     {{-- delete button to remove movie --}}
-    <form action=" {{ route('user-guitar.destroy', $guitar->id) }}" method="POST">
+    <form action=" {{ route('shop-guitar.destroy', $guitar->id) }}" method="POST">
         {{-- delete method for form --}}
         @method('delete')
 

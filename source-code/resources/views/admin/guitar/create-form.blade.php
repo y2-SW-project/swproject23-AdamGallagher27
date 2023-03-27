@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="">
-        <form action="{{ route('user-guitar.store')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin-guitar.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <input type="text" name="name" class="w-full " placeholder="name">

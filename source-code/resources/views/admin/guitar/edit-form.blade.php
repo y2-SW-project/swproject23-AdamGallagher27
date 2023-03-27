@@ -10,7 +10,7 @@
 <body>
     <div class="">
         {{ $guitar }}
-        <form action="{{ route('user-guitar.update', $guitar->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin-guitar.update', $guitar->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
             <input value={{ $guitar->name }} type="text" name="name" class="w-full " placeholder="name">
