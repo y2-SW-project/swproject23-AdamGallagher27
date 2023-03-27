@@ -16,7 +16,7 @@
             <input type="text" name="name" class="w-full " placeholder="name">
             <input type="text" name="description" class="w-full " placeholder="description">
             <input type="text" name="make" class="w-full " placeholder="make">
-            <input type="text" name="bid_expiration" class="w-full " placeholder="bid expiration time">
+            <input type="datetime-local" name="bid_expiration" class="w-full " placeholder="bid expiration time">
             <input type="text" name="price" class="w-full " placeholder="price">
             <input type="text" name="type_id" class="w-full " placeholder="type id">
             <input type="text" name="condition_id" class="w-full " placeholder="condition id">
