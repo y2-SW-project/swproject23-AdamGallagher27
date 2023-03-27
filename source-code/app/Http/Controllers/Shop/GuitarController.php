@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,11 +20,11 @@ class GuitarController extends Controller
 
     public function index()
     {
-        $this->isUser();
+        $this->isShop();
 
         $guitars = DB::table('guitars')->take(8)->get();
 
-        return view('user.guitar.welcome')->with('guitars', $guitars);
+        return view('shop.guitar.welcome')->with('guitars', $guitars);
     }
 
 
@@ -36,10 +36,10 @@ class GuitarController extends Controller
      */
     public function create()
     {
-        $this->isUser();
+        $this->isShop();
 
         // return the form for creating a new guitar
-        return view('user.guitar.create-form');
+        return view('shop.guitar.create-form');
     }
 
     /**
@@ -50,7 +50,8 @@ class GuitarController extends Controller
      */
     public function store(Request $request)
     {
-        $this->isUser();
+        $this->isShop();
+
 
         $request->validate([
             'name' => 'required',
@@ -85,12 +86,12 @@ class GuitarController extends Controller
      */
     public function show($id)
     {
-        $this->isUser();
+        $this->isShop();
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
 
-        return view('user.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts);
+        return view('shop.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts);
     }
 
     /**
@@ -101,11 +102,11 @@ class GuitarController extends Controller
      */
     public function edit($id)
     {
-        $this->isUser();
+        $this->isShop();
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
         // dd($guitar);
-        return view('user.guitar.edit-form')->with("guitar",$guitar);
+        return view('shop.guitar.edit-form')->with("guitar",$guitar);
     }
 
     /**
@@ -117,7 +118,7 @@ class GuitarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->isUser();
+        $this->isShop();
 
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
@@ -157,7 +158,7 @@ class GuitarController extends Controller
      */
     public function destroy($id)
     {
-        $this->isUser();
+        $this->isShop();
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
 
@@ -170,14 +171,12 @@ class GuitarController extends Controller
 
     }
 
-    private function isUser() {
-        $user = 1;
+    private function isShop() {
+        $shop = 2;
 
-        if(Auth::user()->role_id !== $user) {
+        if(Auth::user()->role_id !== $shop) {
             return abort(401, 'this action is unauthorized');
         }
 
     }
-
-
 }

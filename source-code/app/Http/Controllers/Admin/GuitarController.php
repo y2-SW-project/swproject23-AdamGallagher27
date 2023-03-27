@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 use App\Models\Guitar;
 
 
 class GuitarController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +23,11 @@ class GuitarController extends Controller
 
     public function index()
     {
-        $this->isUser();
+        $this->isAdmin();
 
         $guitars = DB::table('guitars')->take(8)->get();
 
-        return view('user.guitar.welcome')->with('guitars', $guitars);
+        return view('admin.guitar.welcome')->with('guitars', $guitars);
     }
 
 
@@ -36,10 +39,9 @@ class GuitarController extends Controller
      */
     public function create()
     {
-        $this->isUser();
-
+        $this->isAdmin();
         // return the form for creating a new guitar
-        return view('user.guitar.create-form');
+        return view('admin.guitar.create-form');
     }
 
     /**
@@ -50,7 +52,8 @@ class GuitarController extends Controller
      */
     public function store(Request $request)
     {
-        $this->isUser();
+
+        $this->isAdmin();
 
         $request->validate([
             'name' => 'required',
@@ -85,12 +88,13 @@ class GuitarController extends Controller
      */
     public function show($id)
     {
-        $this->isUser();
+
+        $this->isAdmin();
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
 
-        return view('user.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts);
+        return view('admin.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts);
     }
 
     /**
@@ -101,11 +105,12 @@ class GuitarController extends Controller
      */
     public function edit($id)
     {
-        $this->isUser();
+
+        $this->isAdmin();
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
         // dd($guitar);
-        return view('user.guitar.edit-form')->with("guitar",$guitar);
+        return view('admin.guitar.edit-form')->with("guitar",$guitar);
     }
 
     /**
@@ -117,8 +122,8 @@ class GuitarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->isUser();
 
+        $this->isAdmin();
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
 
@@ -157,8 +162,8 @@ class GuitarController extends Controller
      */
     public function destroy($id)
     {
-        $this->isUser();
-
+        $this->isAdmin();
+        
         $guitar = Guitar::where('id', $id)->firstOrFail();
 
         if($guitar->user_id != Auth::id()) {
@@ -170,14 +175,12 @@ class GuitarController extends Controller
 
     }
 
-    private function isUser() {
-        $user = 1;
+    private function isAdmin() {
+        $admin = 3;
 
-        if(Auth::user()->role_id !== $user) {
+        if(Auth::user()->role_id !== $admin) {
             return abort(401, 'this action is unauthorized');
         }
 
     }
-
-
 }
