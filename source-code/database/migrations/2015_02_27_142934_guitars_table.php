@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('make');
-            $table->string('bid_expiration');
+            $table->dateTime('bid_expiration');
             $table->float('price');
 
             

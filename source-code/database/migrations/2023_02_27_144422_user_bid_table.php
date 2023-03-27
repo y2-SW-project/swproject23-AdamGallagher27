@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             // bid amount
-            $table->dateTime("bid_expiration");
+            $table->float("bid_amount");
 
             // fk for users
             $table->bigInteger("user_id")->unsigned();
