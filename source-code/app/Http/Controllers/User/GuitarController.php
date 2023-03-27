@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Guitar;
 
 
@@ -92,7 +94,9 @@ class GuitarController extends Controller
      */
     public function edit($id)
     {
-        
+        $guitar = Guitar::where('id', $id)->firstOrFail();
+        // dd($guitar);
+        return view('user.guitar.edit-form')->with("guitar",$guitar);
     }
 
     /**
@@ -104,7 +108,34 @@ class GuitarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $guitar = Guitar::where('id', $id)->firstOrFail();
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'make' => 'required',
+            'bid_expiration' => 'required',
+            'price' => 'required',
+            'type_id' => 'required',
+            'condition_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        // dd($guitar);
+        $guitar->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'make' => $request->make,
+            'bid_expiration' => $request->bid_expiration,
+            'price' => $request->price,
+            'type_id' => $request->type_id,
+            'condition_id' => $request->condition_id,
+            'user_id' => $request->user_id,
+        ]);
+
+
+
     }
 
     /**
@@ -115,6 +146,15 @@ class GuitarController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $guitar = Guitar::where('id', $id)->firstOrFail();
+
+        if($guitar->user_id != Auth::id()) {
+            return abort(403);
+        }
+
+        // delete selected guitar
+        $guitar->delete();
+
     }
 }

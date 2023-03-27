@@ -9,7 +9,22 @@
 <body>
     {{-- product component --}}
     {{ $guitar }}
-    {{ $altProducts }}
+    {{-- <a href="{{route('guitar.destroy', $guitar->id) }}">delete</a> --}}
+
+    {{-- delete button to remove movie --}}
+    <form action=" {{ route('guitar.destroy', $guitar->id) }}" method="POST">
+        {{-- delete method for form --}}
+        @method('delete')
+
+        {{-- requiered crsf token  --}}
+        @csrf
+
+        {{-- button for delete --}}
+        <button type="submit"
+            onclick="return confirm('are you sure you want to delete')">Delete</button>
+    </form>
+
+    {{-- {{ $altProducts }} --}}
 
     {{-- other producst --}}
     {{-- <x-product-card price=20/> --}}

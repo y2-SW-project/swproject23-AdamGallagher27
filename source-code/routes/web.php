@@ -18,35 +18,28 @@ use App\Http\Controllers\user\GuitarController;
 */
 
 // standard routes for users not logged in=
-// Route::get('/', function () {
-//     return view('guitar/welcome');
+Route::get('/', function () {
+    return view('guitar/user/welcome');
+});
+
+// Route::get('/search', function () {
+//     return view('search');
 // });
 
-Route::get('/search', function () {
-    return view('search');
-});
+// Route::get('/account', function () {
+//     return view('account');
+// });
 
-Route::get('/account', function () {
-    return view('account');
-});
+// Route::get('/product', function () {
+//     return view('product');
+// });
 
-Route::get('/product', function () {
-    return view('product');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // crud routes
 Route::resource("/user/guitar", GuitarController::class)->middleware(["auth"])->names("guitar");
-
-
-
-
-
-
-
 
 
 Route::middleware('auth')->group(function () {
