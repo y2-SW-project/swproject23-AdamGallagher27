@@ -4,7 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // use production controller
-use App\Http\Controllers\user\GuitarController;
+use App\Http\Controllers\user\GuitarController as UserGuitar;
+use App\Http\Controllers\shop\GuitarController as ShopGuitar;
+use App\Http\Controllers\admin\GuitarController as AdminGuitar;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +42,11 @@ Route::get('/account', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 // crud routes
-Route::resource("/user/guitar", GuitarController::class)->middleware(["auth"])->names("guitar");
+Route::resource("/user/guitar", UserGuitar::class)->middleware(["auth"])->names("user-guitar");
+Route::resource("/admin/guitar", AdminGuitar::class)->middleware(["auth"])->names("admin-guitar");
+Route::resource("/shop/guitar", ShopGuitar::class)->middleware(["auth"])->names("shop-guitar");
+
+
 
 
 Route::middleware('auth')->group(function () {
