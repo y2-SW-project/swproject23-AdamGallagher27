@@ -19,16 +19,16 @@ use App\Http\Controllers\user\GuitarController;
 
 // standard routes for users not logged in=
 Route::get('/', function () {
-    return view('guitar/user/welcome');
+    return view('user/guitar/welcome');
 });
 
 // Route::get('/search', function () {
 //     return view('search');
 // });
 
-// Route::get('/account', function () {
-//     return view('account');
-// });
+Route::get('/account', function () {
+    return view('account');
+});
 
 // Route::get('/product', function () {
 //     return view('product');
