@@ -1,17 +1,18 @@
-<div>
+@vite('resources/js/app.js')
 
-    {{-- top half of nav bar --}}
-    <div>
-        <h1>Capo</h1>
+{{-- top half of nav bar --}}
+<div>
+    <div class="flex justify-between pt-2 pb-2 px-6 border-b-2">
+        <h1 class='text-2xl'>Capo</h1>
 
         <div>
-            <input type="text">
+            <input placeholder="search for brands, models, make" class="rounded-none p-1 w-96 focus:outline-0
+            " type="text">
         </div>
 
         <div>
 
-            <div
-                class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+            <div>
                 @if (Route::has('login'))
                     <div class="">
                         @auth
@@ -35,26 +36,19 @@
                         @endauth
                     </div>
                 @endif
-
-
-
-                {{-- {{ __('Dashboard') }} --}}
-
-                {{-- <button>heart</button>
-            <button>sign up</button>
-            <button>log in</button> --}}
             </div>
         </div>
-
-        {{-- bottom half of nav bar --}}
-        <div>
-            <ul>
-                <li>Electric</li>
-                <li>Acoustic</li>
-                <li>Hollow</li>
-                <li>Classical</li>
-                <li>Bass</li>
-            </ul>
-        </div>
-
     </div>
+
+    {{-- bottom half of nav bar --}}
+    <div class="border-b-2">
+        <ul class="flex ml-6 gap-4 my-2 ">
+            <li>Electric</li>
+            <li>Acoustic</li>
+            <li>Hollow</li>
+            <li>Classical</li>
+            <li>Bass</li>
+        </ul>
+    </div>
+
+</div>
