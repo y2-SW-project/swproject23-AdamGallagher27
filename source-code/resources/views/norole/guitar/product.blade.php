@@ -8,9 +8,11 @@
 </head>
 <body>
     {{-- product component --}}
-    {{ $guitar }}
+    {{-- {{ $guitar }} --}}
+    <x-navbar />
+    <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' />
 
-    {{ $altProducts }}
+    {{-- {{ $altProducts }} --}}
 
 </body>
 </html>

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Product</title>
 </head>
+
 <body>
-    {{-- product component --}}
-    {{ $guitar }}
-    {{-- <a href="{{route('guitar.destroy', $guitar->id) }}">delete</a> --}}
+
+    <x-navbar />
+    <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' />
 
     {{-- delete button to remove movie --}}
     <form action=" {{ route('shop-guitar.destroy', $guitar->id) }}" method="POST">
@@ -20,8 +22,7 @@
         @csrf
 
         {{-- button for delete --}}
-        <button type="submit"
-            onclick="return confirm('are you sure you want to delete')">Delete</button>
+        <button type="submit" onclick="return confirm('are you sure you want to delete')">Delete</button>
     </form>
 
     {{-- {{ $altProducts }} --}}
@@ -32,4 +33,5 @@
         {{ $alt }}
     @endforeach --}}
 </body>
+
 </html>

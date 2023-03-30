@@ -8,8 +8,8 @@
 </head>
 <body>
     {{-- product component --}}
-    {{ $guitar }}
-    {{-- <a href="{{route('guitar.destroy', $guitar->id) }}">delete</a> --}}
+    <x-navbar />
+    <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' />
 
     {{-- delete button to remove movie --}}
     <form action=" {{ route('admin-guitar.destroy', $guitar->id) }}" method="POST">
@@ -24,12 +24,6 @@
             onclick="return confirm('are you sure you want to delete')">Delete</button>
     </form>
 
-    {{-- {{ $altProducts }} --}}
-
-    {{-- other producst --}}
-    {{-- <x-product-card price=20/> --}}
-    {{-- @foreach ($altProducts as $alt)
-        {{ $alt }}
-    @endforeach --}}
+    
 </body>
 </html>
