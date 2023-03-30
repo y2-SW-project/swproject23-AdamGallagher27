@@ -22,7 +22,7 @@ use App\Http\Controllers\admin\GuitarController as AdminGuitar;
 
 // standard routes for users not logged in=
 Route::get('/', function () {
-    return view('user/guitar/welcome');
+    return redirect('/../home');
 });
 
 // Route::get('/search', function () {
@@ -41,6 +41,9 @@ Route::get('/account', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
+
 // crud routes
 Route::resource("/user/guitar", UserGuitar::class)->middleware(["auth"])->names("user-guitar");
 Route::resource("/admin/guitar", AdminGuitar::class)->middleware(["auth"])->names("admin-guitar");
@@ -54,5 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
+// home route
+Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name("home.index");
 
 require __DIR__.'/auth.php';
