@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Types;
 use App\Models\Guitar;
+use App\Models\Condition;
+use App\Models\User;
+
 
 
 class GuitarController extends Controller
@@ -92,8 +95,13 @@ class GuitarController extends Controller
 
         $guitar = Guitar::where('id', $id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
+        $type = Types::where('id', $guitar->type_id)->firstOrFail();
+        $condition = Condition::where('id', $guitar->condition_id)->firstOrFail();
+        $postedBy = User::where('id', $guitar->user_id)->firstOrFail();
 
-        return view('shop.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts);
+
+        return view('shop.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
+        ->with('condition', $condition)->with('user', $postedBy);
     }
 
     /**
