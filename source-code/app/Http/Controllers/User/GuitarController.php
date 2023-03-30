@@ -23,8 +23,10 @@ class GuitarController extends Controller
         $this->isUser();
 
         $guitars = DB::table('guitars')->take(8)->get();
+        $users = DB::table('users')->take(8)->get();
 
-        return view('user.guitar.welcome')->with('guitars', $guitars);
+
+        return view('user.guitar.welcome')->with('guitars', $guitars)->with('users', $users);
     }
 
 
