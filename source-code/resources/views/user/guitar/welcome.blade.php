@@ -1,54 +1,30 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Capo
-        </title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </head>
-    <body>
-        <div>
-            {{-- @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+    <title>Capo
+    </title>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div> 
-            @endif--}}
+</head>
 
-            {{-- testing nav bar component --}}
-            <x-navbar/>
+<body>
+    <div>
+        <x-navbar />
+        <h2>Top Shops</h2>
+        @foreach ($users as $user)
+            <x-top-shops userName='{{ $user->name }}' img='path' />
+        @endforeach
+        <h2>Top Products</h2>
+        @foreach ($guitars as $guitar)
+            <a href="{{ route('user-guitar.show', $guitar->id) }}">
+                <x-product-card price='{{ $guitar->price }}' img='path' />
+            </a>
+        @endforeach
+        <x-home-bottom />
+    </div>
+</body>
 
-            {{-- {{ $guitars }} --}}
-            
-
-            {{-- testing category buttons component --}}
-            {{-- @for ($i = 0; $i < 10; $i++)
-            <x-category-buttons title='test' />
-            @endfor --}}
-
-            {{-- testing top shops component --}}
-            {{-- @for ($i = 0; $i < 10; $i++)
-            <x-top-shops userName='test' img='path' />
-            @endfor --}}
-            @foreach ($guitars as $guitar)
-                <a href="{{route('user-guitar.show', $guitar->id) }}">show </a>
-                <br>
-                <a href="{{route('user-guitar.edit', $guitar->id) }}">edit </a>
-                <x-top-shops userName='{{ $guitar->name }}' img='path' />
-            @endforeach
-
-            {{-- shop now / create shop component --}}
-            <x-home-bottom />
-            
-        </div>
-    </body>
 </html>
