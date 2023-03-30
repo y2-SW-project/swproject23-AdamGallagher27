@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 // use production controller
 use App\Http\Controllers\user\GuitarController as UserGuitar;
 use App\Http\Controllers\shop\GuitarController as ShopGuitar;
 use App\Http\Controllers\admin\GuitarController as AdminGuitar;
+use App\Http\Controllers\NoRole\GuitarController as NoGuitar;
 
 
 /*
@@ -20,9 +23,14 @@ use App\Http\Controllers\admin\GuitarController as AdminGuitar;
 |
 */
 
-// standard routes for users not logged in=
+Route::resource("/norole/guitar", NoGuitar::class)->names("norole-guitar");
+
+// standard routes for users not logged in
 Route::get('/', function () {
-    return redirect('/../home');
+    if(Auth::check()) {
+        return redirect('/../home');
+    };
+    return redirect('/norole/guitar');
 });
 
 // Route::get('/search', function () {
