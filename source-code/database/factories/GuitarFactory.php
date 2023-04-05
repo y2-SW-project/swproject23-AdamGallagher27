@@ -31,8 +31,8 @@ class GuitarFactory extends Factory
             "price" => $this->faker->numberBetween(50, 200),
             "user_id" => $this->faker->randomElement(User::pluck("id")),
             "condition_id" => $this->faker->numberBetween(1, 5),
-            "type_id" => $this->faker->numberBetween(1, 5)
-
+            "type_id" => $this->faker->numberBetween(1, 5),
+            "image" => asset('images/guitar-def', true)
         ];
     }
 }
