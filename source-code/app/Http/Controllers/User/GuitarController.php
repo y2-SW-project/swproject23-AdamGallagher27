@@ -10,6 +10,7 @@ use App\Models\Types;
 use App\Models\Condition;
 use App\Models\User;
 use App\Models\Guitar;
+use App\Models\UserLike;
 
 
 class GuitarController extends Controller
@@ -177,6 +178,18 @@ class GuitarController extends Controller
         // delete selected guitar
         $guitar->delete();
 
+    }
+
+
+    public function account($user_id) {
+
+        $this->isUser();
+
+        $guitar = Guitar::where('user_id', $user_id)->get();
+        $liked = UserLike::where('user_id', $user_id)->get();
+        $user = User::where('id', $user_id)->get();
+
+        return view('user.guitar.account')->with('guitar', $guitar)->with('liked', $liked)->with('user', $user);
     }
 
     private function isUser() {
