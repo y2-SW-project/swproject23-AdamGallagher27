@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('make');
             $table->dateTime('bid_expiration');
             $table->float('price');
+            $table->string('image');
 
             
             // fk for types
