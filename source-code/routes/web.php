@@ -50,6 +50,10 @@ Route::get('/account', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/shop/guitar/account/{user_id}', [ShopGuitar::class, 'account'])->name('shop.account');
+Route::get('/user/guitar/account/{user_id}', [UserGuitar::class, 'account'])->name('user.account');
+Route::get('/admin/guitar/account/{user_id}', [AdminGuitar::class, 'account'])->name('admin.account');
+
 
 
 // crud routes
@@ -57,6 +61,7 @@ Route::resource("/user/guitar", UserGuitar::class)->middleware(["auth"])->names(
 Route::resource("/admin/guitar", AdminGuitar::class)->middleware(["auth"])->names("admin-guitar");
 Route::resource("/shop/guitar", ShopGuitar::class)->middleware(["auth"])->names("shop-guitar");
 
+// Route::get("shop/guitar/account", ShopGuitar::class)
 
 
 
