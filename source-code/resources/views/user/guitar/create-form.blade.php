@@ -20,6 +20,7 @@
             <input type="text" name="price" class="w-full " placeholder="price">
             <input type="text" name="type_id" class="w-full " placeholder="type id">
             <input type="text" name="condition_id" class="w-full " placeholder="condition id">
+            <x-file-input type="file" placeholder="Image" name="image" class="w-full mt-6" field="image"></x-file-input>
             <input type="hidden" name="user_id" class="w-full " value="{{ auth()->user()->id }}">
             <input type="hidden" name="_token" value="{{ Session::token() }}"> 
             <button name="submit" type="Submit" class="mt-4">submit</button>

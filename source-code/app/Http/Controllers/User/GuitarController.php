@@ -66,7 +66,14 @@ class GuitarController extends Controller
             'type_id' => 'required',
             'condition_id' => 'required',
             'user_id' => 'required',
+            'image' => 'file|image'
         ]);
+
+
+        $guitar_image = $request->file('image');
+        $extension = $guitar_image->getClientOriginalExtension();
+        $file = date('Y-m-d-His') . '_' . $request->input('name') . '.' . $extension;
+        $path = $guitar_image->storeAs('public/images', $file);
 
         Guitar::create([
             'name' => $request->name,
@@ -77,6 +84,7 @@ class GuitarController extends Controller
             'type_id' => $request->type_id,
             'condition_id' => $request->condition_id,
             'user_id' => $request->user_id,
+            'image' => $file
         ]);
 
         // return dd($request);

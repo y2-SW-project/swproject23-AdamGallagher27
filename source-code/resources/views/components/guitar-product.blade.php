@@ -1,13 +1,15 @@
 <div>
 
     <div class="flex justify-center mt-10">
-        {{-- {{ $guitar }} --}}
         <div class="grid grid-cols-2 gap-10">
 
             <div class="w-96">
                 <div class="w-full">
-
-                    <img src="{{ url('/images/shop.png') }}" alt="product image">
+                    @if (file_exists(public_path('storage/images/' . $guitar->image)))
+                    <img src="{{ asset('storage/images/' . $guitar->image) }}" alt="guitar poster">
+                    @else
+                    <img src="{{url('/images/guitar-def.jpg')}}" alt="guitar poster">
+                @endif
                 </div>
             </div>
             <div class="w-96">
