@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('bid_expiration');
             $table->float('price');
             $table->string('image');
+            $table->boolean('sold')->default(false);
 
             
             // fk for types

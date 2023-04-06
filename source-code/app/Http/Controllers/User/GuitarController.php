@@ -199,7 +199,29 @@ class GuitarController extends Controller
     public function buy(Request $request) {
         $this->isUser();
 
-        
+        $guitar_id = $request->guitar_id;
+
+        $guitar = Guitar::where('id', $guitar_id)->firstOrFail();
+
+        $guitar->update([
+            'sold' => true
+        ]);
+
+        $current = UserBid::where('guitar_id',$guitar_id)->max('bid_amount');
+
+        if(is_null($current)) {
+            $current = 0;
+        }
+
+        $guitar = Guitar::where('id', $guitar_id)->firstOrFail();
+        $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
+        $type = Types::where('id', $guitar->type_id)->firstOrFail();
+        $condition = Condition::where('id', $guitar->condition_id)->firstOrFail();
+        $postedBy = User::where('id', $guitar->user_id)->firstOrFail();
+
+
+        return redirect('user/guitar/' . $guitar->id)->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
+        ->with('condition', $condition)->with('user', $postedBy)->with('current', $current);        
     }
 
 

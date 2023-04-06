@@ -1,4 +1,3 @@
-
 @livewireStyles
 <div>
     <div class="flex justify-center mt-10">
@@ -7,10 +6,10 @@
             <div class="w-96">
                 <div class="w-full">
                     @if (file_exists(public_path('storage/images/' . $guitar->image)))
-                    <img src="{{ asset('storage/images/' . $guitar->image) }}" alt="guitar poster">
+                        <img src="{{ asset('storage/images/' . $guitar->image) }}" alt="guitar poster">
                     @else
-                    <img src="{{url('/images/guitar-def.jpg')}}" alt="guitar poster">
-                @endif
+                        <img src="{{ url('/images/guitar-def.jpg') }}" alt="guitar poster">
+                    @endif
                 </div>
             </div>
             <div class="w-96">
@@ -26,17 +25,25 @@
 
                 </ul>
                 <ul>
-                    <li><button
+                    <li>
+                        <button
                             class="mt-4 bg-gray-700 hover:bg-white text-white hover:text-black font-bold py-1 border w-80"
-                            x-data="{}" x-on:click="window.livewire.emitTo('bid-modal', 'show')"
-                            >
-                            
+                            x-data="{}" x-on:click="window.livewire.emitTo('bid-modal', 'show')">
+
                             Make Bid
                         </button></li>
-                    <li><button
-                            class="mt-1  hover:bg-gray-700 text-grey hover:text-white font-bold py-1 border border-black w-80">
-                            Buy Now
-                        </button></li>
+                    <li>
+                        <form action="{{ route('user-guitar.buy') }}">
+                            <input type="hidden" name="guitar_id" value="{{ $guitar->id }}">
+                            <button
+                                class="mt-1 hover:bg-gray-700 text-grey hover:text-white font-bold py-1 border border-black w-80"
+                                type="submit"
+                                >
+
+                                Buy Now
+                            </button>
+                        </form>
+                        </li>
 
                     @switch(Auth::user()->role_id)
                         @case(1)
@@ -76,6 +83,6 @@
 
     </div>
 
-    <livewire:bid-modal :user_id=" Auth::user()->id " :guitar_id="$guitar->id" />
+    <livewire:bid-modal :user_id="Auth::user()->id" :guitar_id="$guitar->id" />
 </div>
 @livewireScripts
