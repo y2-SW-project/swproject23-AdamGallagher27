@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserBid extends Model
 {
     use HasFactory;
+    protected $table = 'user_bid';
+    protected $guarded = [];
 }

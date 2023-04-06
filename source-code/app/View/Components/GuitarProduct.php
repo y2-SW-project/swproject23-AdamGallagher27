@@ -17,6 +17,7 @@ class GuitarProduct extends Component
         public object $type,
         public object $condition,
         public object $user,
+        public string $current,
 
 
     ){}

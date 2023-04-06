@@ -11,7 +11,7 @@ class UserLike extends Model
 
     // prevents mass assignment error
     protected $guarded = [];
-
+    
     protected $table = 'user_like';
 
     public function guitars() {
