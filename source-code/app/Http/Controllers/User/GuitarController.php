@@ -14,6 +14,10 @@ use App\Models\UserLike;
 use App\Models\UserBid;
 
 
+// regular users with an account can
+// view guitars, buy, bid and see users accounts
+
+
 class GuitarController extends Controller
 {
     /**
@@ -22,74 +26,17 @@ class GuitarController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+    //  sends users to welcome view
     public function index()
     {
         $this->isUser();
 
+        // load first 6 guitars and send them to welcome view
         $guitars = DB::table('guitars')->take(6)->get();
-        $users = DB::table('users')->take(8)->get();
-
-
-        return view('user.guitar.welcome')->with('guitars', $guitars)->with('users', $users);
+        return view('user.guitar.welcome')->with('guitars', $guitars);
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $this->isUser();
-
-        // return the form for creating a new guitar
-        return view('user.guitar.create-form');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->isUser();
-
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'make' => 'required',
-            'bid_expiration' => 'required',
-            'price' => 'required',
-            'type_id' => 'required',
-            'condition_id' => 'required',
-            'user_id' => 'required',
-            'image' => 'file|image'
-        ]);
-
-
-        $guitar_image = $request->file('image');
-        $extension = $guitar_image->getClientOriginalExtension();
-        $file = date('Y-m-d-His') . '_' . $request->input('name') . '.' . $extension;
-        $path = $guitar_image->storeAs('public/images', $file);
-
-        Guitar::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'make' => $request->make,
-            'bid_expiration' => $request->bid_expiration,
-            'price' => $request->price,
-            'type_id' => $request->type_id,
-            'condition_id' => $request->condition_id,
-            'user_id' => $request->user_id,
-            'image' => $file
-        ]);
-
-        // return dd($request);
-    }
 
     /**
      * Display the specified resource.
@@ -97,180 +44,125 @@ class GuitarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // shows product
     public function show($id)
     {
         $this->isUser();
 
+        // load current highest bid
         $current = UserBid::where('guitar_id', $id)->max('bid_amount');
 
+        // if the current bid is null start it at 0
         if(is_null($current)) {
             $current = 0;
         }
 
-
+        // eager load data for product view
         $guitar = Guitar::where('id', $id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
         $type = Types::where('id', $guitar->type_id)->firstOrFail();
         $condition = Condition::where('id', $guitar->condition_id)->firstOrFail();
         $postedBy = User::where('id', $guitar->user_id)->firstOrFail();
 
-
+        // return product view with data
         return view('user.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
         ->with('condition', $condition)->with('user', $postedBy)->with('current', $current);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $this->isUser();
-
-        $guitar = Guitar::where('id', $id)->firstOrFail();
-        // dd($guitar);
-        return view('user.guitar.edit-form')->with("guitar",$guitar);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->isUser();
-
-
-        $guitar = Guitar::where('id', $id)->firstOrFail();
-
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'make' => 'required',
-            'bid_expiration' => 'required',
-            'price' => 'required',
-            'type_id' => 'required',
-            'condition_id' => 'required',
-            'user_id' => 'required',
-        ]);
-
-        // dd($guitar);
-        $guitar->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'make' => $request->make,
-            'bid_expiration' => $request->bid_expiration,
-            'price' => $request->price,
-            'type_id' => $request->type_id,
-            'condition_id' => $request->condition_id,
-            'user_id' => $request->user_id,
-        ]);
-
-
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->isUser();
-
-        $guitar = Guitar::where('id', $id)->firstOrFail();
-
-        if($guitar->user_id != Auth::id()) {
-            return abort(403);
-        }
-
-        // delete selected guitar
-        $guitar->delete();
-
-    }
-
+    // users can buy products outright
     public function buy(Request $request) {
         $this->isUser();
 
+        // load current guitar
         $guitar_id = $request->guitar_id;
-
         $guitar = Guitar::where('id', $guitar_id)->firstOrFail();
 
+        // change the sold property to true
         $guitar->update([
             'sold' => true
         ]);
 
+        // load current highest bid
         $current = UserBid::where('guitar_id',$guitar_id)->max('bid_amount');
 
+        // if its null start current at 0
         if(is_null($current)) {
             $current = 0;
         }
 
+        // eager load data
         $guitar = Guitar::where('id', $guitar_id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
         $type = Types::where('id', $guitar->type_id)->firstOrFail();
         $condition = Condition::where('id', $guitar->condition_id)->firstOrFail();
         $postedBy = User::where('id', $guitar->user_id)->firstOrFail();
 
-
+        // redirect to product view with data
+        // redirect prevents multiple buy entries in db
         return redirect('user/guitar/' . $guitar->id)->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
         ->with('condition', $condition)->with('user', $postedBy)->with('current', $current);        
     }
 
 
+    // make a bid on a guitar
     public function bid(Request $request){
         $this->isUser();
 
+        // load current highest bid
         $current = UserBid::where('guitar_id', $request->guitar_id)->max('bid_amount');
 
+        // if the current highest bid is null
+        // start current at 0
         if(is_null($current)) {
             $current = 0;
         }
 
         $id = $request->guitar_id;
 
+        // validate request
         $request->validate([
             'user_id' => 'required',
             'guitar_id' => 'required',
-            'bid_amount' => 'required'
+            'bid_amount' => 'required|numeric'
         ]);
         
+        // add new entry to bid table
         UserBid::create([
             'guitar_id' => $request->guitar_id,
             'user_id' => $request->user_id,
             'bid_amount' => $request->bid_amount,
         ]);
 
+        // eager load data for product view
         $guitar = Guitar::where('id', $id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
         $type = Types::where('id', $guitar->type_id)->firstOrFail();
         $condition = Condition::where('id', $guitar->condition_id)->firstOrFail();
         $postedBy = User::where('id', $guitar->user_id)->firstOrFail();
 
-
+        // redirect to guitar view with data
+        // redirect prevents multiple entries into the bid table
         return redirect('user/guitar/' . $guitar->id)->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
         ->with('condition', $condition)->with('user', $postedBy)->with('current', $current);
     }
 
 
+    // view users account
     public function account($user_id) {
 
         $this->isUser();
 
+        // load data for account view
         $guitar = Guitar::where('user_id', $user_id)->get();
         $liked = UserLike::where('user_id', $user_id)->get();
         $user = User::where('id', $user_id)->get();
 
+        // load account view with data
         return view('user.guitar.account')->with('guitar', $guitar)->with('liked', $liked)->with('user', $user);
     }
 
+    // function to authorize a user
     private function isUser() {
         $user = 1;
 
