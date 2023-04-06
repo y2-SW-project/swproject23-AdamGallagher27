@@ -23,9 +23,11 @@ use App\Http\Controllers\NoRole\GuitarController as NoGuitar;
 |
 */
 
+// controller for users with no role (ie...account)
 Route::resource("/norole/guitar", NoGuitar::class)->names("norole-guitar");
 
-// standard routes for users not logged in
+// checks if the user is authenticated then sends them to correct route
+// if no role send to norole route
 Route::get('/', function () {
     if(Auth::check()) {
         return redirect('/../home');
@@ -33,29 +35,17 @@ Route::get('/', function () {
     return redirect('/norole/guitar');
 });
 
-// Route::get('/search', function () {
-//     return view('search');
-// });
-
-Route::get('/account', function () {
-    return view('account');
-});
-
-// Route::get('/product', function () {
-//     return view('product');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-
+// routes for viewing accounts
 Route::get('/shop/guitar/account/{user_id}', [ShopGuitar::class, 'account'])->name('shop.account');
 Route::get('/user/guitar/account/{user_id}', [UserGuitar::class, 'account'])->name('user.account');
 Route::get('/admin/guitar/account/{user_id}', [AdminGuitar::class, 'account'])->name('admin.account');
 
+// routes for user / admins buying and bidding
 Route::get('/user/guitar/bid', [UserGuitar::class, 'bid'])->middleware(["auth"])->name('user-guitar.bid');
 Route::get('/user/guitar/buy', [UserGuitar::class, 'buy'])->middleware(["auth"])->name('user-guitar.buy');
+
+Route::get('/admin/guitar/bid', [AdminGuitar::class, 'bid'])->middleware(["auth"])->name('admin-guitar.bid');
+Route::get('/admin/guitar/buy', [AdminGuitar::class, 'buy'])->middleware(["auth"])->name('admin-guitar.buy');
 
 
 // crud routes
@@ -63,18 +53,12 @@ Route::resource("/user/guitar", UserGuitar::class)->middleware(["auth"])->names(
 Route::resource("/admin/guitar", AdminGuitar::class)->middleware(["auth"])->names("admin-guitar");
 Route::resource("/shop/guitar", ShopGuitar::class)->middleware(["auth"])->names("shop-guitar");
 
-// Route::get("shop/guitar/account", ShopGuitar::class)
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-
 
 // home route
 Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name("home.index");
