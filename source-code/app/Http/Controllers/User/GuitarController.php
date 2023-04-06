@@ -11,6 +11,7 @@ use App\Models\Condition;
 use App\Models\User;
 use App\Models\Guitar;
 use App\Models\UserLike;
+use App\Models\UserBid;
 
 
 class GuitarController extends Controller
@@ -100,6 +101,13 @@ class GuitarController extends Controller
     {
         $this->isUser();
 
+        $current = UserBid::where('guitar_id', $id)->max('bid_amount');
+
+        if(is_null($current)) {
+            $current = 0;
+        }
+
+
         $guitar = Guitar::where('id', $id)->firstOrFail();
         $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
         $type = Types::where('id', $guitar->type_id)->firstOrFail();
@@ -108,7 +116,7 @@ class GuitarController extends Controller
 
 
         return view('user.guitar.product')->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
-        ->with('condition', $condition)->with('user', $postedBy);
+        ->with('condition', $condition)->with('user', $postedBy)->with('current', $current);
     }
 
     /**
@@ -186,6 +194,47 @@ class GuitarController extends Controller
         // delete selected guitar
         $guitar->delete();
 
+    }
+
+    public function buy(Request $request) {
+        $this->isUser();
+
+        
+    }
+
+
+    public function bid(Request $request){
+        $this->isUser();
+
+        $current = UserBid::where('guitar_id', $request->guitar_id)->max('bid_amount');
+
+        if(is_null($current)) {
+            $current = 0;
+        }
+
+        $id = $request->guitar_id;
+
+        $request->validate([
+            'user_id' => 'required',
+            'guitar_id' => 'required',
+            'bid_amount' => 'required'
+        ]);
+        
+        UserBid::create([
+            'guitar_id' => $request->guitar_id,
+            'user_id' => $request->user_id,
+            'bid_amount' => $request->bid_amount,
+        ]);
+
+        $guitar = Guitar::where('id', $id)->firstOrFail();
+        $altProducts = DB::table('guitars')->where('id', '!=', $guitar->id)->take(5)->get();
+        $type = Types::where('id', $guitar->type_id)->firstOrFail();
+        $condition = Condition::where('id', $guitar->condition_id)->firstOrFail();
+        $postedBy = User::where('id', $guitar->user_id)->firstOrFail();
+
+
+        return redirect('user/guitar/' . $guitar->id)->with("guitar",$guitar)->with('altProducts', $altProducts)->with('type', $type)
+        ->with('condition', $condition)->with('user', $postedBy)->with('current', $current);
     }
 
 
