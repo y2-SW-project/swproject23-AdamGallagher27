@@ -1,5 +1,6 @@
-<div>
 
+@livewireStyles
+<div>
     <div class="flex justify-center mt-10">
         <div class="grid grid-cols-2 gap-10">
 
@@ -16,6 +17,8 @@
                 <h1>{{ $guitar->name }}</h1>
                 <ul>
                     <li class="mt-3">Buy Now Price: €{{ $guitar->price }}</li>
+                    <li class="mt-3">Current Bid: €{{ $current }}</li>
+                    <li class="mt-3">Bid Expiration: {{ $guitar->bid_expiration }}</li>
                     <li class="mt-3">Condition: {{ $condition->condition }}</li>
                     <li class="mt-3">Type: {{ $type->type }}</li>
                     <li class="mt-3">Description: {{ $guitar->description }}</li>
@@ -24,7 +27,10 @@
                 </ul>
                 <ul>
                     <li><button
-                            class="mt-4 bg-gray-700 hover:bg-white text-white hover:text-black font-bold py-1 border w-80">
+                            class="mt-4 bg-gray-700 hover:bg-white text-white hover:text-black font-bold py-1 border w-80"
+                            x-data="{}" x-on:click="window.livewire.emitTo('bid-modal', 'show')"
+                            >
+                            
                             Make Bid
                         </button></li>
                     <li><button
@@ -55,7 +61,8 @@
                         @break
 
                         @default
-                            {{ Auth::user()->role_id }}
+                            {{-- {{ Auth::user()->role_id }} --}}
+                            fdshfkdhsf
                     @endswitch
 
 
@@ -69,5 +76,6 @@
 
     </div>
 
-
+    <livewire:bid-modal :user_id=" Auth::user()->id " :guitar_id="$guitar->id" />
 </div>
+@livewireScripts
