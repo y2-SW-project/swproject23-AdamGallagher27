@@ -25,6 +25,8 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
+
+                            <a href="{{ route('user.account', ['user_id' => Auth::user()->id])}}">Account</a>
                         @else
                             <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
                                 in</a>
