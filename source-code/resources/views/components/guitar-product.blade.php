@@ -25,28 +25,32 @@
 
                 </ul>
                 <ul>
-                    <li>
-                        <button
-                            class="mt-4 bg-gray-700 hover:bg-white text-white hover:text-black font-bold py-1 border w-80"
-                            x-data="{}" x-on:click="window.livewire.emitTo('bid-modal', 'show')">
 
-                            Make Bid
-                        </button></li>
-                    <li>
-                        <form action="{{ route('user-guitar.buy') }}">
-                            <input type="hidden" name="guitar_id" value="{{ $guitar->id }}">
-                            <button
-                                class="mt-1 hover:bg-gray-700 text-grey hover:text-white font-bold py-1 border border-black w-80"
-                                type="submit"
-                                >
-
-                                Buy Now
-                            </button>
-                        </form>
-                        </li>
-
-                    @switch(Auth::user()->role_id)
+                    {{-- if the user is authenticated load the correct link to account view / button to purchase / bid --}}
+                    {{-- if not authenticated the user cannot view users accounts --}}
+                    @switch((Auth::check()) ? (Auth::user()->role_id) : ('no role'))
                         @case(1)
+                            <li>
+                                <button
+                                    class="mt-4 bg-gray-700 hover:bg-white text-white hover:text-black font-bold py-1 border w-80"
+                                    x-data="{}" x-on:click="window.livewire.emitTo('bid-modal', 'show')">
+
+                                    Make Bid
+                                </button>
+                            </li>
+
+
+                            <li>
+                                <form action="{{ route('user-guitar.buy') }}">
+                                    <input type="hidden" name="guitar_id" value="{{ $guitar->id }}">
+                                    <button
+                                        class="mt-1 hover:bg-gray-700 text-grey hover:text-white font-bold py-1 border border-black w-80"
+                                        type="submit">
+
+                                        Buy Now
+                                    </button>
+                                </form>
+                            </li>
                             <a href="{{ route('user.account', ['user_id' => $user->id]) }}">
                                 <li class="mt-3">Posted By: {{ $user->name }}</li>
 
@@ -61,15 +65,40 @@
                         @break
 
                         @case(3)
-                            <a href="{{ route('admin.account', ['user_id' => $user->id]) }}">
-                                <li class="mt-3">Posted By: {{ $user->name }}</li>
+                        <li>
+                            <button
+                                class="mt-4 bg-gray-700 hover:bg-white text-white hover:text-black font-bold py-1 border w-80"
+                                x-data="{}" x-on:click="window.livewire.emitTo('bid-modal', 'show')">
 
-                            </a>
+                                Make Bid
+                            </button>
+                        </li>
+
+
+                        <li>
+                            <form action="{{ route('admin-guitar.buy') }}">
+                                <input type="hidden" name="guitar_id" value="{{ $guitar->id }}">
+                                <button
+                                    class="mt-1 hover:bg-gray-700 text-grey hover:text-white font-bold py-1 border border-black w-80"
+                                    type="submit">
+
+                                    Buy Now
+                                </button>
+                            </form>
+                        </li>
+                        <a href="{{ route('admin.account', ['user_id' => $user->id]) }}">
+                            <li class="mt-3">Posted By: {{ $user->name }}</li>
+
+                        </a>
+                        @break
+
+                        @case('no role')
+                            <li class="mt-3">Posted By: {{ $user->name }}</li>
                         @break
 
                         @default
-                            {{-- {{ Auth::user()->role_id }} --}}
-                            fdshfkdhsf
+                            default value
+                        @break
                     @endswitch
 
 
@@ -80,9 +109,10 @@
             </div>
         </div>
 
-
+        @if (Auth::check())
+            <livewire:bid-modal :user_id="Auth::user()->id" :guitar_id="$guitar->id" />
+        @endif
     </div>
 
-    <livewire:bid-modal :user_id="Auth::user()->id" :guitar_id="$guitar->id" />
 </div>
 @livewireScripts

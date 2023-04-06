@@ -9,21 +9,14 @@
 <body>
     {{-- product component --}}
     <x-navbar />
-    <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' />
 
-    {{-- delete button to remove movie --}}
-    <form action=" {{ route('admin-guitar.destroy', $guitar->id) }}" method="POST">
-        {{-- delete method for form --}}
-        @method('delete')
-
-        {{-- requiered crsf token  --}}
-        @csrf
-
-        {{-- button for delete --}}
-        <button type="submit"
-            onclick="return confirm('are you sure you want to delete')">Delete</button>
-    </form>
-
-    
+    {{-- if the current time is greater than the bid --}}
+    {{-- expiration display expired component --}}
+    @if (date('y-m-d h:i:s') > $guitar->bid_expiration)
+        {{-- {{ date('y-m-d h:i:s') }} --}}
+        <x-sold-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current' />
+    @else
+        <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current'  />  
+    @endif
 </body>
 </html>

@@ -13,10 +13,6 @@
 <body>
     <div>
         <x-navbar />
-        <h2>Top Shops</h2>
-        @foreach ($users as $user)
-            <x-top-shops userName='{{ $user->name }}' img='path' />
-        @endforeach
         <h2>Top Products</h2>
         <div class="flex justify-center">
             <div class="flex justify-around px-96 gap-6 mb-32">

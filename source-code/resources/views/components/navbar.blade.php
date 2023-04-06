@@ -6,7 +6,8 @@
         <h1 class='text-2xl'>Capo</h1>
 
         <div>
-            <input placeholder="search for brands, models, make" class="rounded-none p-1 w-96 focus:outline-0
+            <input placeholder="search for brands, models, make"
+                class="rounded-none p-1 w-96 focus:outline-0
             " type="text">
         </div>
 
@@ -16,9 +17,6 @@
                 @if (Route::has('login'))
                     <div class="">
                         @auth
-                            {{-- if they are authenticated dont send them to dahsboard  --}}
-                            {{-- only give them an opton to log out --}}
-                            {{-- <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a> --}}
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 
@@ -26,7 +24,23 @@
                                 @csrf
                             </form>
 
-                            <a href="{{ route('user.account', ['user_id' => Auth::user()->id])}}">Account</a>
+
+
+                            @switch(Auth::user()->role_id)
+                                @case(1)
+                                    <a href="{{ route('user.account', ['user_id' => Auth::user()->id]) }}">Account</a>
+                                @break
+
+                                @case(2)
+                                    <a href="{{ route('shop.account', ['user_id' => Auth::user()->id]) }}">Account</a>
+                                @break
+
+                                @case(3)
+                                    <a href="{{ route('admin.account', ['user_id' => Auth::user()->id]) }}">Account</a>
+                                @break
+
+                                @default
+                            @endswitch
                         @else
                             <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
                                 in</a>
