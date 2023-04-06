@@ -54,6 +54,7 @@ Route::get('/shop/guitar/account/{user_id}', [ShopGuitar::class, 'account'])->na
 Route::get('/user/guitar/account/{user_id}', [UserGuitar::class, 'account'])->name('user.account');
 Route::get('/admin/guitar/account/{user_id}', [AdminGuitar::class, 'account'])->name('admin.account');
 
+Route::get('/user/guitar/bid', [UserGuitar::class, 'bid'])->middleware(["auth"])->name('user-guitar.bid');
 
 
 // crud routes
