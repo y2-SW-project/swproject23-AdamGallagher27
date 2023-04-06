@@ -26,7 +26,7 @@ class GuitarController extends Controller
     {
         $this->isUser();
 
-        $guitars = DB::table('guitars')->take(8)->get();
+        $guitars = DB::table('guitars')->take(6)->get();
         $users = DB::table('users')->take(8)->get();
 
 
