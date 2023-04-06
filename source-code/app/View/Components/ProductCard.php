@@ -13,7 +13,8 @@ class ProductCard extends Component
      */
     public function __construct(
         // defines the props for component
-        public string $price,
+        public object $guitar,
+
     ){}
 
     /**
