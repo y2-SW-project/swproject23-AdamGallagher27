@@ -23,31 +23,44 @@
                     <li class="mt-3">Description: {{ $guitar->description }}</li>
                 </ul>
                 <ul>
-                    @switch(Auth::user()->role_id)
+                    {{-- if the user is authenticated load the correct link to account view / button to purchase / bid --}}
+                    {{-- if not authenticated the user cannot view users accounts --}}
+                    @switch((Auth::check()) ? (Auth::user()->role_id) : ('no role'))
+                    {{-- user --}}
                         @case(1)
                             <a href="{{ route('user.account', ['user_id' => $user->id]) }}">
                                 <li class="mt-3">Posted By: {{ $user->name }}</li>
 
                             </a>
+                            <li><livewire:like-button :guitar="$guitar" :currentUser="Auth::user()" /> </li>
+
                         @break
 
+                        {{-- shop --}}
                         @case(2)
                             <a href="{{ route('shop.account', ['user_id' => $user->id]) }}">
                                 <li class="mt-3">Posted By: {{ $user->name }}</li>
 
                             </a>
+                            <li><livewire:like-button :guitar="$guitar" :currentUser="Auth::user()" /> </li>
                         @break
 
+                        {{-- admin --}}
                         @case(3)
                             <a href="{{ route('admin.account', ['user_id' => $user->id]) }}">
                                 <li class="mt-3">Posted By: {{ $user->name }}</li>
-
                             </a>
+                            <li><livewire:like-button :guitar="$guitar" :currentUser="Auth::user()" /> </li>
                         @break
 
+                        {{-- no role --}}
+                        @case('no role')
+                            <li class="mt-3">Posted By: {{ $user->name }}</li>
+                        @break
+
+
                         @default
-                            {{-- {{ Auth::user()->role_id }} --}}
-                            fdshfkdhsf
+                            default value
                     @endswitch
 
 
