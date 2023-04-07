@@ -6,9 +6,13 @@
         <h1 class='text-2xl'>Capo</h1>
 
         <div>
-            <input placeholder="search for brands, models, make"
-                class="rounded-none p-1 w-96 focus:outline-0
-            " type="text">
+            
+            <form action="{{ route('search') }}">
+                @csrf
+                <input placeholder="search for brands, models, make"
+                    class="rounded-none p-1 w-96 focus:outline-0
+                " type="text" name="phrase" >
+            </form>
         </div>
 
         <div>

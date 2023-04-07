@@ -10,6 +10,8 @@ use App\Http\Controllers\user\GuitarController as UserGuitar;
 use App\Http\Controllers\shop\GuitarController as ShopGuitar;
 use App\Http\Controllers\admin\GuitarController as AdminGuitar;
 use App\Http\Controllers\NoRole\GuitarController as NoGuitar;
+use App\Http\Controllers\Search;
+
 
 
 /*
@@ -34,6 +36,9 @@ Route::get('/', function () {
     };
     return redirect('/norole/guitar');
 });
+
+// route for search page
+Route::get('/search', [Search::class, 'getSearch'])->name('search');
 
 // routes for viewing accounts
 Route::get('/shop/guitar/account/{user_id}', [ShopGuitar::class, 'account'])->name('shop.account');
