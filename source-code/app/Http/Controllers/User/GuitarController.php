@@ -153,9 +153,18 @@ class GuitarController extends Controller
 
         $this->isUser();
 
-        // load data for account view
-        $guitar = Guitar::where('user_id', $user_id)->get();
-        $liked = UserLike::where('user_id', $user_id)->get();
+       // eager load data with user_id
+       $guitar = Guitar::where('user_id', $user_id)->get();
+
+       // get the guitars that the current user has already liked
+       // (as opposed to the entries in user_like which is just user / guitar ids)
+       $liked = Guitar::whereHas(
+           'userLikes', function($query) use ($user_id) {
+               $query->where('user_id', $user_id);
+           }
+       )->get();
+
+       
         $user = User::where('id', $user_id)->get();
 
         // load account view with data
