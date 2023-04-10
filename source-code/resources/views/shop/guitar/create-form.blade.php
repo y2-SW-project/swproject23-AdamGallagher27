@@ -9,17 +9,19 @@
     <title>create guitar</title>
 </head>
 <body>
+    <x-navbar/>
     <div class="">
         <form action="{{ route('shop-guitar.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            <input type="text" name="name" class="w-full " placeholder="name">
-            <input type="text" name="description" class="w-full " placeholder="description">
-            <input type="text" name="make" class="w-full " placeholder="make">
-            <input type="datetime-local" name="bid_expiration" class="w-full " placeholder="bid expiration time">
-            <input type="text" name="price" class="w-full " placeholder="price">
-            <input type="text" name="type_id" class="w-full " placeholder="type id">
-            <input type="text" name="condition_id" class="w-full " placeholder="condition id">
+            <input  type="text" name="name" class="w-full " placeholder="name" value="{{ old('name', '') }}">
+            <input type="text" name="description" class="w-full " placeholder="description" value="{{ old('description', '') }}">
+            <input type="text" name="make" class="w-full " placeholder="make" value="{{ old('make', '') }}">
+            <input type="datetime-local" name="bid_expiration" class="w-full " placeholder="bid expiration time" value="{{ old('bid_expiration', '') }}">
+            <input type="text" name="price" class="w-full " placeholder="price" value="{{ old('price', '') }}">
+            <input type="text" name="type_id" class="w-full " placeholder="type id" value="{{ old('type_id', '') }}">
+            <input type="text" name="condition_id" class="w-full " placeholder="condition id" value="{{ old('condition_id', '') }}">
+            <x-file-input type="file" placeholder="Image" name="image" class="w-full mt-6" field="image"></x-file-input>
             <input type="hidden" name="user_id" class="w-full " value="{{ auth()->user()->id }}">
             <input type="hidden" name="_token" value="{{ Session::token() }}"> 
             <button name="submit" type="Submit" class="mt-4">submit</button>
