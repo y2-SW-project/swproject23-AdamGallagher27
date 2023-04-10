@@ -70,19 +70,26 @@ class GuitarController extends Controller
 
         $this->isAdmin();
 
-        // validate the request
+        // validate request
         $request->validate([
             'name' => 'required',
             'description' => 'required',
             'make' => 'required',
             'bid_expiration' => 'required',
-            'price' => 'required',
-            'type_id' => 'required',
-            'condition_id' => 'required',
-            'user_id' => 'required',
+            'price' => 'required|numeric',
+            'type_id' => 'required|numeric',
+            'condition_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+            'image' => 'file|image'
         ]);
 
-        // create new guitar
+        // image data
+        $guitar_image = $request->file('image');
+        $extension = $guitar_image->getClientOriginalExtension();
+        $file = date('Y-m-d-His') . '_' . $request->input('name') . '.' . $extension;
+        $path = $guitar_image->storeAs('public/images', $file);
+
+        // add new entry to guitar table 
         Guitar::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -92,6 +99,7 @@ class GuitarController extends Controller
             'type_id' => $request->type_id,
             'condition_id' => $request->condition_id,
             'user_id' => $request->user_id,
+            'image' => $file
         ]);
 
     }
