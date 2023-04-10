@@ -13,6 +13,7 @@
     <div>
         <x-navbar />
 
+        <a href="{{ URL::to('shop/guitar/create') }}">create </a>
         {{-- table for user data --}}
         {{-- this will take a user object --}}
         {{-- <x-account-data/> --}}

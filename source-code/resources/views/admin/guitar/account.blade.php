@@ -13,10 +13,7 @@
     <div>
         <x-navbar />
 
-        {{-- table for user data --}}
-        {{-- this will take a user object --}}
-        {{-- <x-account-data/> --}}
-
+        <a href="{{ URL::to('admin/guitar/create') }}">create </a>
         <livewire:profile-tabs :products='$guitar' :likes='$liked' />
 
     </div>
