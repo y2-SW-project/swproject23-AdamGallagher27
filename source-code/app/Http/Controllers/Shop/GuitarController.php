@@ -96,7 +96,8 @@ class GuitarController extends Controller
             'image' => $file
         ]);
 
-        // return dd($request);
+        return redirect('shop/guitar/account/' . Auth::user()->id)->with('success', 'your guitar was created successfully');
+
     }
 
     /**
@@ -188,7 +189,7 @@ class GuitarController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-
+        return redirect('shop/guitar/' . $guitar->id)->with('success', 'your guitar was updated successfully');
 
     }
 
