@@ -10,6 +10,13 @@
     {{-- product component --}}
     <x-navbar />
 
+    {{-- show success message for update / create --}}
+    @if (session('success'))
+    <div class="mb-4 px-4 py-2 bg-green-100 border border-green-200 text-green">
+        {{ session('success') }}
+    </div>
+@endif
+
     @if (Auth::user()->id === $guitar->user_id)
     <a href="{{ URL::to('shop/guitar/' . $guitar->id . '/edit') }}">edit </a>
     @endif
