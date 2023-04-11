@@ -18,6 +18,8 @@
         <br>
     @endforeach
     
-    {{ $guitars->appends(['phrase' => $phrase])->links() }}
+    <div class="w-48 mt-4 mx-auto">
+        {{ $guitars->appends(['phrase' => $phrase])->links() }}
+    </div>
 </body>
 </html>

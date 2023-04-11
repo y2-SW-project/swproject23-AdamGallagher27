@@ -17,7 +17,7 @@ class Search extends Controller
         $conditions = Condition::all();
         $types = Types::all();
 
-        $guitars = Guitar::where('name', 'LIKE', '%' . $phrase . '%')->paginate(15);
+        $guitars = Guitar::where('name', 'LIKE', '%' . $phrase . '%')->simplePaginate(15);
 
         return view('search')->with('guitars', $guitars)->with('phrase', $phrase)
         ->with('types', $types)->with('conditions', $conditions);
