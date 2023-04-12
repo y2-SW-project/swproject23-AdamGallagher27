@@ -19,7 +19,8 @@
             </div>
         @endif
 
-        <a href="{{ URL::to('shop/guitar/create') }}">create </a>
+        <x-account-data :userData='$user' />
+        <a class="ml-96 rounded border bg-main text-white px-3" href="{{ URL::to('shop/guitar/create') }}">create </a>
         {{-- table for user data --}}
         {{-- this will take a user object --}}
         {{-- <x-account-data/> --}}

@@ -18,8 +18,8 @@
                 {{ session('success') }}
             </div>
         @endif
-
-        <a href="{{ URL::to('admin/guitar/create') }}">create </a>
+        <x-account-data :userData='$user' />
+        <a class="ml-96 rounded border bg-main text-white px-3" href="{{ URL::to('admin/guitar/create') }}">create </a>
         <livewire:profile-tabs :products='$guitar' :likes='$liked' />
 
     </div>

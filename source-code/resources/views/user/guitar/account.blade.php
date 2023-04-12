@@ -15,7 +15,7 @@
 
         {{-- table for user data --}}
         {{-- this will take a user object --}}
-        {{-- <x-account-data/> --}}
+        <x-account-data :userData='$user' />
 
         <livewire:profile-tabs :products='$guitar' :likes='$liked' />
 
