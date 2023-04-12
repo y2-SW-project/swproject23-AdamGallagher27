@@ -3,11 +3,11 @@
         {{-- <img src="{{ $img }}" alt="image of product">
          --}}
          <div class="w-48">
-                <div class="w-full">
+                <div class="w-full h-48 overflow-hidden">
                     @if (file_exists(public_path('storage/images/' . $guitar->image)))
-                        <img src="{{ asset('storage/images/' . $guitar->image) }}" alt="guitar poster">
+                        <img class="w-auto h-auto object-scale-down" src="{{ asset('storage/images/' . $guitar->image) }}" alt="guitar poster">
                     @else
-                        <img src="{{ url('/images/home-' . rand(1, 6) . '.png') }}" alt="guitar poster">
+                        <img class="w-auto h-auto object-scale-down" src="{{ url('/images/home-' . rand(1, 6) . '.png') }}" alt="guitar poster">
                     @endif
                 </div>
         </div>
