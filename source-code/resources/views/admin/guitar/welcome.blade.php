@@ -13,15 +13,17 @@
 <body>
     <div>
         <x-navbar />
-        <h2>Top Products</h2>
-        <div class="flex justify-center">
-            <div class="flex justify-around px-96 gap-6 mb-32">
-                @foreach ($guitars as $guitar)
-                <a href="{{ route('admin-guitar.show', $guitar->id) }}">
+        <h2 class="ml-80 pl-6 font-medium text-xl">Our Favourite <span class="text-main">Products</span></h2>
+        <div class="grid grid-cols-6 px-80 mb-20 mt-6">
+      
+            @foreach ($guitars as $guitar)
+            <div>
+                <a href="{{ route('admin-guitar.show', $guitar->id) }} class">
                     <x-product-card :guitar='$guitar' />
                 </a>
-            @endforeach
             </div>
+            @endforeach
+
         </div>
         <x-home-bottom />
     </div>
