@@ -31,7 +31,7 @@ class GuitarController extends Controller
         $this->isShop();
 
         // load first 6 guitars and send them to welcome view 
-        $guitars = DB::table('guitars')->take(6)->get();
+        $guitars = DB::table('guitars')->take(12)->get();
         return view('shop.guitar.welcome')->with('guitars', $guitars);
     }
 

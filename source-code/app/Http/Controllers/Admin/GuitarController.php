@@ -34,7 +34,7 @@ class GuitarController extends Controller
         $this->isAdmin();
 
         // load first 6 guitars
-        $guitars = DB::table('guitars')->take(6)->get();
+        $guitars = DB::table('guitars')->take(12)->get();
 
         // return welcome view with guitars
         return view('admin.guitar.welcome')->with('guitars', $guitars);

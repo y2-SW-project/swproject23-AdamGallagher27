@@ -27,7 +27,7 @@ class GuitarController extends Controller
     public function index()
     {
         // load first 6 guitars and send them to welcome view
-        $guitars = DB::table('guitars')->take(6)->get();
+        $guitars = DB::table('guitars')->take(12)->get();
         return view('norole.guitar.welcome')->with('guitars', $guitars);
     }
 
