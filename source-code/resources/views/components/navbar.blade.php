@@ -1,17 +1,18 @@
 @vite('resources/js/app.js')
 
 {{-- top half of nav bar --}}
-<div>
+<div class="mb-6">
+
     <div class="flex justify-between pt-2 pb-2 px-6 border-b-2">
-        <h1 class='text-2xl'>Capo</h1>
+        <h1 class='text-2xl text-main'><a href="/">Capo</a></h1>
 
         <div>
-            
+
             <form action="{{ route('search') }}">
                 @csrf
                 <input placeholder="search for brands, models, make"
                     class="rounded-none p-1 w-96 focus:outline-0
-                " type="text" name="phrase" >
+                " type="text" name="phrase">
             </form>
         </div>
 
@@ -21,18 +22,10 @@
                 @if (Route::has('login'))
                     <div class="">
                         @auth
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-
-
 
                             @switch(Auth::user()->role_id)
                                 @case(1)
-                                    <a href="{{ route('user.account', ['user_id' => Auth::user()->id]) }}">Account</a>
+                                    <a class="" href="{{ route('user.account', ['user_id' => Auth::user()->id]) }}">Account</a>
                                 @break
 
                                 @case(2)
@@ -45,6 +38,14 @@
 
                                 @default
                             @endswitch
+
+
+                            <a class="rounded border bg-main text-white	px-3 ml-4" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         @else
                             <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
                                 in</a>
