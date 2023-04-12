@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center mb-6">
         
         {{-- <img src="{{ $img }}" alt="image of product">
          --}}
@@ -11,5 +11,5 @@
                     @endif
                 </div>
         </div>
-        <p>{{ $guitar->name }}</p>
+        <p class="text-center">{{ $guitar->name }}</p>
 </div>
