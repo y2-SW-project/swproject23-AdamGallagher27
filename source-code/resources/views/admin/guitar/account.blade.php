@@ -23,7 +23,9 @@
         <livewire:profile-tabs :products='$guitar' :likes='$liked' />
 
     </div>
+    <x-footer />
     @livewireScripts
+
 </body>
 
 </html>

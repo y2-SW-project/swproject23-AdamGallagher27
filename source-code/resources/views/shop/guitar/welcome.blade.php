@@ -27,6 +27,7 @@
         </div>
         <x-home-bottom />
     </div>
+    <x-footer />
 </body>
 
 </html>

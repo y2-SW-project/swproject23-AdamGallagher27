@@ -26,6 +26,7 @@
 
         </div>
         <x-home-bottom />
+        <x-footer />
     </div>
 </body>
 

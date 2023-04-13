@@ -55,5 +55,6 @@
             <button name="submit" type="Submit" class="mt-4">submit</button>
         </form>
     </div>
+    <x-footer />
 </body>
 </html>

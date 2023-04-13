@@ -9,7 +9,7 @@
     @livewireStyles
 </head>
 
-<body>
+<body class="flex flex-col justify-between">
     <div>
         <x-navbar />
 
@@ -20,6 +20,8 @@
         <livewire:profile-tabs :products='$guitar' :likes='$liked' />
 
     </div>
+        <x-footer />
+    
     @livewireScripts
 </body>
 
