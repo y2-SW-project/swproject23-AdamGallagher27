@@ -22,13 +22,13 @@
     @endif
 
 
-    {{-- if the current time is greater than the bid --}}
+        {{-- if the current time is greater than the bid --}}
     {{-- expiration display expired component --}}
-    @if (date('y-m-d h:i:s') > $guitar->bid_expiration)
-        {{-- {{ date('y-m-d h:i:s') }} --}}
+    @if (strtotime(date('y-m-d h:i:s')) < strtotime(date($guitar->bid_expiration)))
         <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current'  />  
         @else
         <x-sold-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current' />
     @endif
+    <x-footer />
 </body>
 </html>
