@@ -17,10 +17,11 @@ class Search extends Controller
         $conditions = Condition::all();
         $types = Types::all();
 
+        $num =  Guitar::where('name', 'LIKE', '%' . $phrase . '%')->count();
         $guitars = Guitar::where('name', 'LIKE', '%' . $phrase . '%')->simplePaginate(15);
 
         return view('search')->with('guitars', $guitars)->with('phrase', $phrase)
-        ->with('types', $types)->with('conditions', $conditions);
+        ->with('types', $types)->with('conditions', $conditions)->with('num', $num);
     }
 
 }
