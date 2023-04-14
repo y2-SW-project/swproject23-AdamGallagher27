@@ -18,8 +18,23 @@
 @endif
 
     @if (Auth::user()->id === $guitar->user_id)
-    <a href="{{ URL::to('admin/guitar/' . $guitar->id . '/edit') }}">edit </a>
+    <div class="flex gap-4">
+        <a class="ml-96 rounded border bg-main text-white px-3" href="{{ URL::to('admin/guitar/' . $guitar->id . '/edit') }}">Edit </a>
+        <form action=" {{ route('admin-guitar.destroy', $guitar->id) }}" method="POST">
+            {{-- delete method for form --}}
+            @method('delete')
+    
+            {{-- requiered crsf token  --}}
+            @csrf
+    
+            {{-- button for delete --}}
+            <button type="submit" class="rounded border bg-red-500 text-white px-3"
+                onclick="return confirm('are you sure you want to delete')">Delete</button>
+        </form>
+    </div>
     @endif
+
+
 
         {{-- if the current time is greater than the bid --}}
     {{-- expiration display expired component --}}
