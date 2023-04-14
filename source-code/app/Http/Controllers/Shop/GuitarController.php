@@ -48,8 +48,12 @@ class GuitarController extends Controller
     {
         $this->isShop();
 
+        // loading conditions / types
+        $conditions = DB::table('conditions')->get();
+        $types = DB::table('types')->get();
+
         // return the form for creating a new guitar
-        return view('shop.guitar.create-form');
+        return view('shop.guitar.create-form')->with('conditions', $conditions)->with('types', $types);
     }
 
     /**
@@ -144,9 +148,14 @@ class GuitarController extends Controller
     {
         $this->isShop();
 
-        // load guitar and send it to edit form
+        // loading conditions / types
+        $conditions = DB::table('conditions')->get();
+        $types = DB::table('types')->get();
+
+
+        // load guitar and return form with current guitar
         $guitar = Guitar::where('id', $id)->firstOrFail();
-        return view('shop.guitar.edit-form')->with("guitar",$guitar);
+        return view('shop.guitar.edit-form')->with("guitar",$guitar)->with('conditions', $conditions)->with('types', $types);
     }
 
     /**
@@ -213,9 +222,17 @@ class GuitarController extends Controller
             return abort(403);
         }
 
+        
+        // delete every bid for this guitar
+        DB::table('user_bid')->where('guitar_id', $guitar->id)->delete();
+
+        // delete every like for this guitar
+        DB::table('user_like')->where('guitar_id', $guitar->id)->delete();
+
         // delete selected guitar
         $guitar->delete();
 
+        return redirect('shop/guitar/');
     }
 
     // view users account
