@@ -11,11 +11,12 @@
     <x-navbar />
 
         {{-- if the current time is greater than the bid --}}
+    {{-- or the component is sold --}}
     {{-- expiration display expired component --}}
-    @if (strtotime(date('y-m-d h:i:s')) < strtotime(date($guitar->bid_expiration)))
-        <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current'  />  
-        @else
+    @if (strtotime(date('y-m-d h:i:s')) > strtotime(date($guitar->bid_expiration)) || $guitar->sold)
         <x-sold-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current' />
+    @else
+        <x-guitar-product :guitar='$guitar' :type='$type' :condition='$condition' :user='$user' :current='$current'  />
     @endif
     <x-footer />
 </body>
